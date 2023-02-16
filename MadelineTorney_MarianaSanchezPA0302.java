@@ -13,7 +13,7 @@
 //*************************************************************************
 
 // issue is my arrays are size 100, need to fix b4 method call
-package pa;
+package MadelineTorney_MarianaSanchezPA03;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -70,12 +70,16 @@ public class MadelineTorney_MarianaSanchezPA0302 {
 	}
 	
 	public static double lowestCostCalculator(double billAmt[]) {
-		double min = billAmt[0];
+		double min = highestCostCalculator(billAmt);
 		int ii; 
 		
-		for (ii= 0; ii < billAmt.length; ii++) {
-			if (billAmt [ii] < min) {
-				min = billAmt[ii];
+		for (ii = 1; ii < billAmt.length; ii++) {
+				if (billAmt[ii] != 0.0) {
+					if (billAmt[ii] < min) {
+						min = billAmt[ii];
+				} else {
+				continue;
+			}
 			}
 		}
 		return min;
@@ -89,6 +93,7 @@ public class MadelineTorney_MarianaSanchezPA0302 {
 			double currentMin = billAmt[i];
 			int currentMinIndex = i;
 			String currentMinInfo = custInfoArr[i];
+			
 
 			for (int j = i + 1; j < billAmt.length; j++) {
 				if (currentMin > billAmt[j]) {
@@ -108,11 +113,17 @@ public class MadelineTorney_MarianaSanchezPA0302 {
 				custInfoArr[i] = currentMinInfo;
 			}
 			
-			if (custInfoArr[i]!=null) {
+			if (custInfoArr[i]!=null) { // getting rid of null values in array
 				 displayStr += "\n" + custInfoArr[i] + "\t$" + String.format("%.2f", billAmt[i]); // DOES IT WORK RIGHT IDK }
 			 }
-			
 	} // end outer for loop
+		
+		// display min and max values
+		displayStr += "\n---------------------------\n"
+				+ "Min: $" + String.format("%.2f", lowestCostCalculator(billAmt))
+				+ "\tMax: $" + String.format("%.2f", highestCostCalculator(billAmt));
+		
+		
 		return displayStr;
 	}
 	
