@@ -31,6 +31,7 @@ public class MadelineTorney_MarianaSanchezPA0401 {
 	        this.lastName = lastName;
 	        this.points = generatePoints();
 	        this.avgPoints = getAvg(this.points);
+	        this.finalScore = getFinalScore();
 	    }
 		
 	}
@@ -40,7 +41,7 @@ public class MadelineTorney_MarianaSanchezPA0401 {
 		
 		for (int i = 0; i < points.length; i++) {
 			points[i] = (int)(Math.random() * 10) + 1;
-			System.out.println(points[i] + " ");
+			System.out.print(points[i] + " ");
 		}
 		
 		
@@ -51,17 +52,59 @@ public class MadelineTorney_MarianaSanchezPA0401 {
 		int sum = 0;
 		double average = 0;
 		
-		for (int i = 1; i < points.length - 2; i++) {
+		// find minimum of points array
+		int min = points[0];
+			for (int i = 0; i < points.length; i++) {
+				if (points[i] < min) {
+					min = points[i];
+				} else {
+					continue;
+				}
+				
+			} // end for loop
+				
+		// find maximum of points array
+		int max = points[0];
+			for (int i= 0; i < points.length; i++) {
+				if (points[i] > max) {
+					max = points[i];
+				} else {
+					continue;
+				}
+			} // end for loop
+		
+		for (int i = 0; i < points.length; i++) {
 			sum += points[i];
 		}
 		
-		average = sum / 7;
+		average = (sum - (min + max)) / 5;
 		
 		return average;
 	}
 	
-	public static String[] sortCompetitorsArr(String []competitorsArr) {
+	public static double getFinalScore() {
 		
+	}
+	
+	public static String[] sortCompetitorsArr(String[] competitorsArr) {
+		for (int i = 0; i < competitorsArr.length - 1; i++) {
+		      // Find the minimum in the list[i..list.length-1]
+		      String currentMin = competitorsArr[i];
+		      int currentMinIndex = i;
+
+		      for (int j = i + 1; j < competitorsArr.length; j++) {
+		        if (currentMin > competitorsArr[j]) {
+		          currentMin = competitorsArr[j];
+		          currentMinIndex = j;
+		        }
+		      }
+
+		      // Swap list[i] with list[currentMinIndex] if necessary;
+		      if (currentMinIndex != i) {
+		    	  competitorsArr[currentMinIndex] = competitorsArr[i];
+		    	  competitorsArr[i] = currentMin;
+		      }
+		    }
 		
 		 return competitorsArr;
 	}
@@ -70,18 +113,19 @@ public class MadelineTorney_MarianaSanchezPA0401 {
 		// TODO Auto-generated method stub
 		int numDivers = 0;
 		boolean loop = false;
+		int difficultyLevel = 0;
 		
 		// prompt user to enter number of divers
 		while (loop == false) {
 			try {
 				numDivers = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter number of divers:"));
-				if (numDivers <= 0 || numDivers >= 6) {
+				if (numDivers <= 0) {
 					throw new Exception();
 				} else {
 					loop = true;
 				} // end else
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Invalid input. Enter a number between 1 and 5.");
+				JOptionPane.showMessageDialog(null, "Invalid input. Enter a number between greater than 0.");
 				loop = false;
 			} // end try catch
 		} // end while
@@ -89,9 +133,27 @@ public class MadelineTorney_MarianaSanchezPA0401 {
 		loop = false;
 		DivingCompetitor[] competitorsArr = new DivingCompetitor[numDivers];
 		
+		// prompt user to enter difficulty level
+		while (loop == false) {
+			try {
+				difficultyLevel = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter difficulty level:"));
+				if (difficultyLevel <= 0 || numDivers >= 6) {
+					throw new Exception();
+				} else {
+					loop = true;
+				} // end else
+			} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Invalid input. Enter a number between 1 and 5.");
+						loop = false;
+					} // end try catch
+				} // end while
+				
+		loop = false;
+		
 		// read first name for divers & put in object array
 		for (int i = 0; i < numDivers; i++) {
 			competitorsArr[i] = new DivingCompetitor("", "");
+			competitorsArr[i].difficultyLevel = difficultyLevel;
 			while (loop == false) {
 				try {
 					competitorsArr[i].firstName = JOptionPane.showInputDialog(null, "Enter a diver's first name (" + (i+1) + "):");
@@ -128,30 +190,8 @@ public class MadelineTorney_MarianaSanchezPA0401 {
 		} // end for loop
 		
 		loop = false;
-		int[] points = generatePoints();
 		
-		// find min of points array
-		int min = points[0];
-		for (int i = 0; i < points.length - 1; i++) {
-				if (points[i] < min) {
-					min = points[i];
-			} else {
-			continue;
-		}
-				System.out.println(min);
 		
-	} // end for loop
-		
-		// find max of points array
-		int max = points[0];
-		for (int i= 0; i < points.length - 1; i++) {
-			if (points[i] > max) {
-				max = points[i];
-			} else {
-				continue;
-			}
-		} // end for loop
-		System.out.println(max);
 		
 		
 		
